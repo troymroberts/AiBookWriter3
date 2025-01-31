@@ -1,19 +1,15 @@
 # test_agent_communication.py
 import unittest
-from crewai import Agent, Task, Crew, Process
-from crewai.project import CrewBase
+from crewai import Agent, Task
 
 # Import your agent definitions and configurations from crew.py 
 from crew import BookWritingCrew
 
-# Assuming you are using Ollama models, import LLM from crewai.llm
-from crewai.llm import LLM
-
 class AgentCommunicationTest(unittest.TestCase):
 
     def setUp(self):
-        # Use a dummy path for the yWriter project since it is not used in this test.
-        self.crew = BookWritingCrew(ywriter_project="dummy_project.yw7") 
+        # We don't need to load a real yWriter project for this test
+        self.crew = BookWritingCrew(ywriter_project="dummy_project.yw7")  
         self.crew.kickoff()  # Initialize the agents
 
     def test_story_planner_communication(self):
