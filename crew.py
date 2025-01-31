@@ -5,26 +5,26 @@ import yaml
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task, before_kickoff, after_kickoff
 
-# Import your agent definitions
-from .agents.story_planner import StoryPlanner, StoryPlannerConfig
-from .agents.outline_creator import OutlineCreator, OutlineCreatorConfig
-from .agents.setting_builder import SettingBuilder, SettingBuilderConfig
-from .agents.character_creator import CharacterCreator, CharacterCreatorConfig
-from .agents.relationship_architect import (
+# Import your agent definitions using absolute imports:
+from agents.story_planner import StoryPlanner, StoryPlannerConfig
+from agents.outline_creator import OutlineCreator, OutlineCreatorConfig
+from agents.setting_builder import SettingBuilder, SettingBuilderConfig
+from agents.character_creator import CharacterCreator, CharacterCreatorConfig
+from agents.relationship_architect import (
     RelationshipArchitect,
     RelationshipArchitectConfig,
 )
-from .agents.plot_agent import PlotAgent, PlotAgentConfig
-from .agents.writer import Writer, WriterConfig
-from .agents.editor import Editor, EditorConfig
-from .agents.critic import Critic, CriticConfig
-from .agents.reviser import Reviser, ReviserConfig
-from .agents.memory_keeper import MemoryKeeper, MemoryKeeperConfig
-from .agents.item_developer import ItemDeveloper, ItemDeveloperConfig
-from .agents.researcher import Researcher, ResearcherConfig
+from agents.plot_agent import PlotAgent, PlotAgentConfig
+from agents.writer import Writer, WriterConfig
+from agents.editor import Editor, EditorConfig
+from agents.critic import Critic, CriticConfig
+from agents.reviser import Reviser, ReviserConfig
+from agents.memory_keeper import MemoryKeeper, MemoryKeeperConfig
+from agents.item_developer import ItemDeveloper, ItemDeveloperConfig
+from agents.researcher import Researcher, ResearcherConfig
 
-# Import your custom tools
-from .tools.ywriter_tools import (
+# Import your custom tools using absolute imports:
+from tools.ywriter_tools import (
     ReadProjectNotesTool,
     WriteProjectNoteTool,
     CreateChapterTool,
@@ -34,6 +34,10 @@ from .tools.ywriter_tools import (
     ReadSceneTool,
     WriteSceneContentTool,
 )
+
+# Import your progress monitoring and writing state tools using absolute imports:
+from tools.writing_progress import WritingProgressMonitor
+from tools.writing_state import WritingState
 
 # from .tools.rag_tools import RAGTool  # Uncomment when you implement RAG
 
@@ -67,9 +71,33 @@ class BookWritingCrew:
         print(f"Genre config file not found: {genre_config_path}")
         genre_config = {}  # Default to empty config if file not found
 
-    # You can now access the genre config in your agent and task definitions
-    # For example:
-    #     self.genre_config.get("num_chapters", 10)
+    def __init__(self, ywriter_project: str):
+        super().__init__()  # Initialize the superclass
+        self.ywriter_project = ywriter_project
+
+        # Load the genre configuration
+        genre_file = os.environ.get("BOOK_GENRE", "literary_fiction") + ".yaml"
+        genre_config_path = Path(__file__).parent / "config" / "genres" / genre_file
+
+        try:
+            with open(genre_config_path, "r") as f:
+                self.genre_config = yaml.safe_load(f)
+        except FileNotFoundError:
+            print(f"Genre config file not found: {genre_config_path}")
+            self.genre_config = {}  # Default to empty config if file not found
+
+        # Initialize the WritingProgressMonitor with the number of chapters from genre_config
+        num_chapters = self.genre_config.get("num_chapters", 10)
+        self.monitor = WritingProgressMonitor(num_chapters)
+        self.monitor.start_session()
+
+        # Initialize WritingState
+        checkpoint_file = f"{ywriter_project}_checkpoint.json"
+        if os.path.exists(checkpoint_file):
+            self.state = WritingState(ywriter_project)
+            self.state.load_checkpoint(checkpoint_file)
+        else:
+            self.state = WritingState(ywriter_project)
 
     # Define your agents using the @agent decorator.
     @agent
