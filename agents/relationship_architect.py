@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from typing import Optional
 
 class RelationshipArchitectConfig(BaseModel):
-    llm_endpoint: str = Field(default="http://localhost:11434", description="Endpoint for the language model server.")
+    llm_endpoint: str = Field(default="http://10.1.1.47:11434", description="Endpoint for the language model server.")
     llm_model: str = Field(default="ollama/llama3.2:1b", description="Model identifier for the relationship architect.")
     temperature: float = Field(default=0.7, description="Temperature setting for the language model.")
     max_tokens: int = Field(default=2000, description="Maximum number of tokens for the language model.")

@@ -13,7 +13,7 @@ from ..tools.ywriter_tools import (
 # Configuration model for the OutlineCreator agent
 class OutlineCreatorConfig(BaseModel):
     llm_endpoint: str = Field(
-        default="http://localhost:11434",
+        default="http://10.1.1.47:11434",
         description="Endpoint for the language model server.",
     )
     llm_model: str = Field(
