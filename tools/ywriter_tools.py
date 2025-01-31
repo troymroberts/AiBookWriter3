@@ -6,15 +6,15 @@ from uuid import uuid4
 from crewai.tools import BaseTool
 from pydantic import BaseModel, Field
 
-# Use absolute imports from the pywriter package within your project:
-from pywriter.model.chapter import Chapter
-from pywriter.model.scene import Scene
-from pywriter.model.project_note import ProjectNote
-from pywriter.model.character import Character
-from pywriter.model.location import Location
-from pywriter.model.item import Item
-from pywriter.model.id_generator import create_id
-from pywriter.yw.yw7_file import Yw7File
+# Use absolute imports, from the ywriter7 directory:
+from .ywriter7.model.chapter import Chapter
+from .ywriter7.model.scene import Scene
+from .ywriter7.model.project_note import ProjectNote
+from .ywriter7.model.character import Character
+from .ywriter7.model.location import Location
+from .ywriter7.model.item import Item
+from .ywriter7.model.id_generator import create_id
+from .ywriter7.yw.yw7_file import Yw7File
 
 # Helper function to load a yWriter 7 project
 def load_yw7_file(file_path: str) -> Yw7File:
