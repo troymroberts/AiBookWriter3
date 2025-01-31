@@ -1,12 +1,10 @@
-from crewai import Agent
-from pydantic import BaseModel, Field
-from typing import Optional
-from crewai.tools import BaseTool
-# from crewai_tools import  # Add this when we have specific tools later
-from ..tools.ywriter_tools import (
+from tools.ywriter_tools import (
     ReadProjectNotesTool,
-    WriteProjectNotesTool,
+    WriteProjectNoteTool,
     CreateChapterTool,
+    ReadOutlineTool,
+    ReadCharactersTool,
+    ReadLocationsTool,
 )  # Assuming you'll have these tools
 # from ..tools.rag_tools import RAGTool  # Add this when we implement RAG
 
