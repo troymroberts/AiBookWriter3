@@ -1,3 +1,4 @@
+# test_agent_communication.py
 import unittest
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase
@@ -11,7 +12,7 @@ from crewai.llm import LLM
 class AgentCommunicationTest(unittest.TestCase):
 
     def setUp(self):
-        self.crew = BookWritingCrew()
+        self.crew = BookWritingCrew(ywriter_project="your_ywriter_project.yw7") # Provide a dummy path or set up a test file
         self.crew.kickoff()  # Initialize the agents
 
     def test_story_planner_communication(self):
