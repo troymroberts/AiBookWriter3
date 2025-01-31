@@ -5,7 +5,7 @@ from typing import Optional
 class StoryPlannerConfig(BaseModel):
     """Configuration model for the StoryPlanner agent."""
     llm_endpoint: str = Field(default="http://localhost:11434", description="Endpoint for the language model server.")
-    llm_model: str = Field(default="ollama/llama3.2:3b", description="Model identifier for the story planner.")
+    llm_model: str = Field(default="ollama/llama3.2:1b", description="Model identifier for the story planner.")
     temperature: float = Field(default=0.7, description="Temperature setting for the language model.")
     max_tokens: int = Field(default=3000, description="Maximum number of tokens for the language model.")
     top_p: float = Field(default=0.95, description="Top-p sampling parameter for the language model.")

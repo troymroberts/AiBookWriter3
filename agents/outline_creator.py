@@ -17,7 +17,7 @@ class OutlineCreatorConfig(BaseModel):
         description="Endpoint for the language model server.",
     )
     llm_model: str = Field(
-        default="ollama/llama3.2:3b",
+        default="ollama/llama3.2:1b",
         description="Model identifier for the outline creator.",
     )
     temperature: float = Field(
