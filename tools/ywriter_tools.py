@@ -5,7 +5,8 @@ from uuid import uuid4
 
 from crewai.tools import BaseTool
 from pydantic import BaseModel, Field
-# Assuming pywriter is correctly installed in your project's environment
+
+# Use absolute imports from the pywriter package within your project:
 from pywriter.model.chapter import Chapter
 from pywriter.model.scene import Scene
 from pywriter.model.project_note import ProjectNote
@@ -14,7 +15,6 @@ from pywriter.model.location import Location
 from pywriter.model.item import Item
 from pywriter.model.id_generator import create_id
 from pywriter.yw.yw7_file import Yw7File
-from pywriter.yw.yw7_tree import Yw7Tree
 
 # Helper function to load a yWriter 7 project
 def load_yw7_file(file_path: str) -> Yw7File:
@@ -26,7 +26,7 @@ def load_yw7_file(file_path: str) -> Yw7File:
 
     Returns:
         Yw7File: The loaded yWriter 7 project.
-    
+
     Raises:
         FileNotFoundError: If the file does not exist.
         ValueError: If the file is not a valid .yw7 file.
@@ -38,7 +38,7 @@ def load_yw7_file(file_path: str) -> Yw7File:
         raise ValueError("Invalid file type. Expected a .yw7 file.")
 
     yw7_file = Yw7File(file_path)
-    yw7_file.read() 
+    yw7_file.read()
     return yw7_file
 
 # --- Tools for reading data ---
@@ -58,7 +58,7 @@ class ReadProjectNotesTool(BaseTool):
             notes = yw7_file.novel.projectNotes
             if not notes:
                 return "No project notes found."
-            
+
             notes_data = []
             for note_id in yw7_file.novel.srtPrjNotes:
                 note = notes[note_id]
@@ -83,7 +83,7 @@ class ReadCharactersTool(BaseTool):
             characters = yw7_file.novel.characters
             if not characters:
                 return "No characters found."
-            
+
             character_data = []
             for char_id in yw7_file.novel.srtCharacters:
                 character = characters[char_id]
@@ -127,7 +127,7 @@ class ReadLocationsTool(BaseTool):
                     "AKA": location.aka,
                 }
                 location_data.append(json.dumps(location_info))
-                
+
             return "\n".join(location_data)
         except FileNotFoundError:
             return "Error: yWriter 7 project file not found."
@@ -155,7 +155,7 @@ class ReadOutlineTool(BaseTool):
                     output += f"Chapter ID: {ch_id}, Title: {chapter.title}\n"
                     if chapter.desc:
                         output += f"Description: {chapter.desc}\n"
-                    
+
                     # Add Scene Summaries to the output
                     scene_summaries = []
                     for sc_id in chapter.srtScenes:
@@ -164,7 +164,7 @@ class ReadOutlineTool(BaseTool):
                             scene_summaries.append(f"  Scene ID: {sc_id}, Title: {scene.title}, Summary: {scene.desc}")
                     if scene_summaries:
                         output += "  Scenes:\n" + "\n".join(scene_summaries) + "\n"
-                    
+
                     output += "\n"
 
             if not output:

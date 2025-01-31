@@ -5,7 +5,7 @@ import yaml
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task, before_kickoff, after_kickoff
 
-# Import your agent definitions using absolute imports:
+# Absolute imports from the project root (AiBookWriter3)
 from agents.story_planner import StoryPlanner, StoryPlannerConfig
 from agents.outline_creator import OutlineCreator, OutlineCreatorConfig
 from agents.setting_builder import SettingBuilder, SettingBuilderConfig
