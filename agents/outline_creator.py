@@ -1,3 +1,8 @@
+from crewai import Agent
+from pydantic import BaseModel, Field
+from typing import Optional
+from crewai.tools import BaseTool
+# from crewai_tools import  # Add this when we have specific tools later
 from tools.ywriter_tools import (
     ReadProjectNotesTool,
     WriteProjectNoteTool,
@@ -5,7 +10,7 @@ from tools.ywriter_tools import (
     ReadOutlineTool,
     ReadCharactersTool,
     ReadLocationsTool,
-)  # Assuming you'll have these tools
+)  # Absolute import
 # from ..tools.rag_tools import RAGTool  # Add this when we implement RAG
 
 # Configuration model for the OutlineCreator agent
@@ -15,7 +20,7 @@ class OutlineCreatorConfig(BaseModel):
         description="Endpoint for the language model server.",
     )
     llm_model: str = Field(
-        default="ollama/llama3.2:1b",
+        default="ollama/llama3:latest",
         description="Model identifier for the outline creator.",
     )
     temperature: float = Field(
@@ -65,7 +70,15 @@ class OutlineCreator(Agent):
     Agent responsible for generating detailed chapter outlines based on the story arc plan.
     """
 
-    def __init__(self, config: OutlineCreatorConfig):
+    def __init__(self, config: OutlineCreatorConfig, tools: Optional[list[BaseTool]] = None):
+        if tools is None:
+            tools = []
+
+        tools.extend([
+            ChapterBreakdownTool(),
+            OutlineTemplateTool(),
+        ])
+
         super().__init__(
             role="Master Outliner",
             goal=f"""
@@ -86,13 +99,7 @@ class OutlineCreator(Agent):
             verbose=True,
             allow_delegation=False,
             llm=self.create_llm(config),
-            tools=[
-                ChapterBreakdownTool,
-                OutlineTemplateTool,
-                ReadProjectNotesTool,
-                WriteProjectNotesTool,
-                # RAGTool,
-            ],
+            tools=tools,
         )
 
     def create_llm(self, config: OutlineCreatorConfig):
