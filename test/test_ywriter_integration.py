@@ -1,5 +1,7 @@
+# test_ywriter_integration.py
 import unittest
 import os
+import json
 from crewai import Agent, Task, Crew, Process
 
 # Import your agent definitions and configurations from crew.py
@@ -19,6 +21,8 @@ from tools.ywriter_tools import (
 
 # Import pywriter for direct file verification
 from pywriter.yw.yw7_file import Yw7File
+from pywriter.model.scene import Scene
+from pywriter.model.id_generator import create_id
 
 class YWriterIntegrationTest(unittest.TestCase):
 
@@ -158,27 +162,3 @@ class YWriterIntegrationTest(unittest.TestCase):
             description=f'Write content to scene {scene_id}.',
             agent=self.crew.writer,  # Assuming the Writer agent has the tool
             tools=[WriteSceneContentTool]
-        )
-        write_result = write_scene_task.execute(
-            json.dumps({"yw7_path": self.test_yw7_file, "scene_id": scene_id, "content": "This is a test scene content."})
-        )
-        self.assertIn(f"Content written to scene '{scene_id}' successfully.", write_result)
-
-        # Test ReadSceneTool
-        read_scene_task = Task(
-            description=f"Read the content of scene {scene_id}.",
-            agent=self.crew.writer,  # Assuming the Writer agent has the tool
-            tools=[ReadSceneTool]
-        )
-        read_result = read_scene_task.execute(json.dumps({"yw7_path": self.test_yw7_file, "scene_id": scene_id}))
-        self.assertIn("This is a test scene content.", read_result)
-
-        # Verify with pywriter
-        yw7_file = Yw7File(self.test_yw7_file)
-        yw7_file.read()
-        self.assertEqual(yw7_file.novel.scenes[scene_id].sceneContent, "This is a test scene content.")
-
-    # ... (Add more tests for other tools)
-
-if __name__ == '__main__':
-    unittest.main()

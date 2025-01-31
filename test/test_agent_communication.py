@@ -3,7 +3,7 @@ import unittest
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase
 
-# Import your agent definitions and configurations from crew.py
+# Import your agent definitions and configurations from crew.py 
 from crew import BookWritingCrew
 
 # Assuming you are using Ollama models, import LLM from crewai.llm
@@ -12,7 +12,8 @@ from crewai.llm import LLM
 class AgentCommunicationTest(unittest.TestCase):
 
     def setUp(self):
-        self.crew = BookWritingCrew(ywriter_project="your_ywriter_project.yw7") # Provide a dummy path or set up a test file
+        # Use a dummy path for the yWriter project since it is not used in this test.
+        self.crew = BookWritingCrew(ywriter_project="dummy_project.yw7") 
         self.crew.kickoff()  # Initialize the agents
 
     def test_story_planner_communication(self):
