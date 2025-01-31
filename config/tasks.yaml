@@ -1,0 +1,27 @@
+plan_story_arc:
+  description: >
+    Develop a high-level story arc for the entire book, including major plot points, character arcs, and turning points.
+    The story should be a 10-chapter mystery novel.
+    Use the Story Planner agent to brainstorm and outline the overall story structure.
+    Store the initial story arc ideas in PROJECTNOTES with the tag "StoryArc".
+  expected_output: >
+    A document outlining the main plot points, character arcs, and overall structure of the story, stored in PROJECTNOTES.
+  agent: story_planner
+
+create_chapter_outlines:
+  description: >
+    Create detailed outlines for each chapter, starting with Chapter 1.
+    Use the Outline Creator agent to generate the outline, taking into account the story arc from the Story Planner.
+    Each chapter outline should include:
+      - Chapter Title
+      - Key Events
+      - Character Developments
+      - Setting
+      - Tone
+      - Items
+    Store each chapter outline in a separate PROJECTNOTE (e.g., "Chapter 1 Outline").
+  expected_output: >
+    Detailed chapter outlines for each chapter, stored in individual PROJECTNOTES.
+  agent: outline_creator
+  context:
+    - plan_story_arc
