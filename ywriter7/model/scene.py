@@ -5,8 +5,8 @@ For further information see https://github.com/peter88213/PyWriter
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import re
-from pywriter.model.basic_element import BasicElement
-from pywriter.pywriter_globals import *
+from ywriter7.model.basic_element import BasicElement
+from ywriter7.pywriter_globals import *
 
 #--- Regular expressions for counting words and characters like in LibreOffice.
 # See: https://help.libreoffice.org/latest/en-GB/text/swriter/guide/words_count.html
