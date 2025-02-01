@@ -6,8 +6,8 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 from tkinter import messagebox
 import tkinter as tk
-from pywriter.pywriter_globals import *
-from pywriter.ui.ui import Ui
+from ..pywriter_globals import *
+from .ui import Ui
 
 
 class UiMb(Ui):

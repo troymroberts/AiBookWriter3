@@ -4,8 +4,8 @@ Copyright (c) 2023 Peter Triesberger
 For further information see https://github.com/peter88213/PyWriter
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
-from pywriter.pywriter_globals import *
-from pywriter.ui.ui import Ui
+from ..pywriter_globals import *
+from .ui import Ui
 
 
 class UiCmd(Ui):

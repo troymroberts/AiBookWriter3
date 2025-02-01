@@ -4,10 +4,10 @@ Copyright (c) 2023 Peter Triesberger
 For further information see https://github.com/peter88213/PyWriter
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
-from ywriter7.pywriter_globals import *
-from ywriter7.model.chapter import Chapter
-from ywriter7.model.scene import Scene
-from ywriter7.model.id_generator import create_id
+from ..pywriter_globals import *
+from .chapter import Chapter
+from .scene import Scene
+from .id_generator import create_id
 
 
 class Splitter:

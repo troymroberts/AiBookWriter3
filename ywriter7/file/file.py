@@ -9,7 +9,7 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 from abc import ABC
 from urllib.parse import quote
 import os
-from pywriter.pywriter_globals import *
+from ..pywriter_globals import *
 
 
 class File(ABC):

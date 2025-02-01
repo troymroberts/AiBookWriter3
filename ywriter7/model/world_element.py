@@ -4,7 +4,7 @@ Copyright (c) 2023 Peter Triesberger
 For further information see https://github.com/peter88213/PyWriter
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
-from ywriter7.model.basic_element import BasicElement
+from .basic_element import BasicElement
 
 
 class WorldElement(BasicElement):

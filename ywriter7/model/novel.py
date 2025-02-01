@@ -6,8 +6,8 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 import locale
 import re
-from ywriter7.pywriter_globals import *
-from ywriter7.model.basic_element import BasicElement
+from ..pywriter_globals import *
+from .basic_element import BasicElement
 
 LANGUAGE_TAG = re.compile(r'\[lang=(.*?)\]')
 

@@ -8,10 +8,10 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
-from pywriter.pywriter_globals import *
-from pywriter.ui.ui import Ui
-from pywriter.model.novel import Novel
-from pywriter.yw.yw7_file import Yw7File
+from ..pywriter_globals import *
+from .ui import Ui
+from ..model.novel import Novel
+from ..yw.yw7_file import Yw7File
 
 
 class MainTk(Ui):

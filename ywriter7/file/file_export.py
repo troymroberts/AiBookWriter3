@@ -8,12 +8,11 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 import os
 import re
-from string import Template
-from pywriter.pywriter_globals import *
-from pywriter.model.character import Character
-from pywriter.model.scene import Scene
-from pywriter.file.file import File
-from pywriter.file.filter import Filter
+from ..pywriter_globals import *
+from ..model.character import Character
+from ..model.scene import Scene
+from .file import File
+from .filter import Filter
 
 
 class FileExport(File):

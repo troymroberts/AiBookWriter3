@@ -11,15 +11,15 @@ import re
 from html import unescape
 from datetime import datetime
 import xml.etree.ElementTree as ET
-from pywriter.pywriter_globals import *
-from pywriter.model.chapter import Chapter
-from pywriter.model.scene import Scene
-from pywriter.model.character import Character
-from pywriter.model.world_element import WorldElement
-from pywriter.model.basic_element import BasicElement
-from pywriter.file.file import File
-from pywriter.model.id_generator import create_id
-from pywriter.yw.xml_indent import indent
+from ..pywriter_globals import *
+from ..file.file import File
+from ..file.file_export import FileExport
+from ..model.novel import Novel
+from ..model.chapter import Chapter
+from ..model.scene import Scene
+from ..model.character import Character
+from ..model.world_element import WorldElement
+from ..model.project_note import ProjectNote
 
 
 class Yw7File(File):

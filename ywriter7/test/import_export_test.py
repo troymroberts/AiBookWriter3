@@ -8,10 +8,10 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 import os
 from shutil import copyfile
-from pywriter.pywriter_globals import *
-from pywriter.test.helper import read_file
-from pywriter.test.export_test import ExportTest
-from pywriter.converter.yw7_converter import Yw7Converter
+from ..pywriter_globals import *
+from .helper import read_file
+from .export_test import ExportTest
+from ..converter.yw7_converter import Yw7Converter
 
 UPDATE = False
 
