@@ -2,17 +2,30 @@ import autogen
 from langchain_community.chat_models import ChatOllama
 from langchain_community.embeddings import OllamaEmbeddings
 
-# Set an invalid API key, as we're using Ollama.
+# Custom Langchain Models
+chat_model = ChatOllama(
+    model="qwen2.5:1.5b",  # Replace with your Ollama model
+    base_url="http://10.1.1.47:11434",  # Replace with your Ollama base URL
+    temperature=0.7,
+)
+
+embed_model = OllamaEmbeddings(
+    model="qwen2.5:1.5b",  # Replace with your Ollama model
+    base_url="http://10.1.1.47:11434",  # Replace with your Ollama base URL
+)
+
+# Create an AutoGen LLM config
 config_list = [
     {
         "model": "qwen2.5:1.5b",  # Replace with your Ollama model
         "api_key": "None",  # Invalid API key for Ollama
-        "base_url": "http://10.1.1.47:11434", # Replace with your Ollama base URL
-        "max_retries": 0
+        "base_url": "http://10.1.1.47:11434",  # Replace with your Ollama base URL
+        "max_retries": 0,
+        "custom_llms": [chat_model],
+        "custom_embedding_function": [embed_model],
     }
 ]
 
-# Create an AutoGen LLM config
 llm_config = {
     "config_list": config_list,
     "cache_seed": 42,
@@ -32,6 +45,7 @@ user_proxy = autogen.UserProxyAgent(
     max_consecutive_auto_reply=10,
     is_termination_msg=lambda x: x.get("content", "").rstrip().endswith("TERMINATE"),
 )
+
 coder = autogen.AssistantAgent(
     name="Coder",
     llm_config=llm_config,
