@@ -3,8 +3,8 @@ import autogen
 config_list = [
     {
         "model": "qwen:2.5:1b",
-        "base_url": "http://10.1.1.47:11434",  # Your Ollama server address
-        "api_key": "NULL",  # Placeholder, as Ollama doesn't require a key by default
+        "base_url": "http://10.1.1.47:11434/v1",  # Your Ollama server address
+        "api_key": "ollama",  # Placeholder, as Ollama doesn't require a key by default
     }
 ]
 
