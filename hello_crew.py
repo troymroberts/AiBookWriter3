@@ -1,15 +1,8 @@
 import logging
 from crewai import Agent, Task, Crew, Process
-from langchain_ollama import OllamaLLM
 
-# Configure logging to show DEBUG level messages (optional)
+# Configure logging (optional)
 logging.basicConfig(level=logging.DEBUG)
-
-# Define the Ollama LLM instance
-ollama_llm = OllamaLLM(
-    model="ollama/qwen2.5:1.5b",  # Specify "ollama/" prefix
-    base_url="http://10.1.1.47:11434"
-)
 
 # Create a simple agent
 agent = Agent(
@@ -17,7 +10,8 @@ agent = Agent(
     goal='Say hello and confirm connection to Ollama',
     backstory='An agent designed to test connectivity.',
     verbose=True,
-    llm=ollama_llm
+    llm_model='ollama/qwen2.5:1.5b',
+    llm_base_url="http://10.1.1.47:11434"
 )
 
 # Create a simple task
