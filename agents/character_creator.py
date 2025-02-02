@@ -1,7 +1,7 @@
 from crewai import Agent
 from pydantic import BaseModel, Field
 from typing import Optional
-ffrom langchain_community.llms import Ollama
+from langchain_community.llms import Ollama
 
 class CharacterCreatorConfig(BaseModel):
     """Configuration for the CharacterCreator agent's LLM."""
