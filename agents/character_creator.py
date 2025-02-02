@@ -1,7 +1,6 @@
 from crewai import Agent
 from pydantic import BaseModel, Field
 from typing import Optional
-from langchain_community.llms import Ollama
 
 class CharacterCreatorConfig(BaseModel):
     """Configuration for the CharacterCreator agent's LLM."""
@@ -39,15 +38,6 @@ class CharacterCreator(Agent):
         Args:
             config: Configuration instance containing LLM settings.
         """
-        # Initialize Ollama LLM with agent-specific configuration
-        ollama_llm = Ollama(
-            base_url=config.llm_endpoint,
-            model=config.llm_model,
-            temperature=config.temperature,
-            top_p=config.top_p,
-            # Note: Context window is handled by the model configuration in Ollama directly
-        )
-        
         super().__init__(
             role='Character Creator',
             goal="""
@@ -76,5 +66,11 @@ class CharacterCreator(Agent):
             verbose=True,
             allow_delegation=False,
             tools=[],  # Add specific character development tools as needed
-            llm=ollama_llm
+            llm_config={
+                "config_type": "ollama",
+                "base_url": config.llm_endpoint,
+                "model": config.llm_model,
+                "temperature": config.temperature,
+                "top_p": config.top_p
+            }
         )
