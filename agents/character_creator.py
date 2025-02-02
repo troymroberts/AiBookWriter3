@@ -1,7 +1,7 @@
 from crewai import Agent
 from pydantic import BaseModel, Field
 from typing import Optional
-from langchain_ollama import Ollama
+from langchain_community.llms import Ollama  # Fixed import path
 
 class CharacterCreatorConfig(BaseModel):
     """Configuration for the CharacterCreator agent's LLM."""
@@ -49,7 +49,7 @@ class CharacterCreator(Agent):
             base_url=config.llm_endpoint,
             model=config.llm_model,
             temperature=config.temperature,
-            context_window=config.context_window,  # This controls the context window size
+            context_length=config.context_window,  # Note: parameter name changed to context_length
             top_p=config.top_p,
         )
         
