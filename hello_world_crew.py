@@ -1,12 +1,10 @@
 from crewai import Agent, Task, Crew, Process
-from langchain_community.chat_models import ChatOllama  # Correct import
+from langchain_community.chat_models import ChatOllama
 import os
 
 # --- WORKAROUND (Potentially Required) ---
-# The following workaround might still be needed if
-# your CrewAI installation is using an older version
-# of the `crewai.cli.constants` file.
-
+# Only needed if you set OLLAMA_BASE_URL in your environment
+# and are not passing it directly to the ChatOllama constructor.
 from crewai.cli.constants import ENV_VARS
 
 # Override the key name dynamically
@@ -16,13 +14,13 @@ for entry in ENV_VARS.get("ollama", []):
 # --- END WORKAROUND ---
 
 # Define your Ollama LLM
-ollama_llm = ChatOllama(  # Use ChatOllama
+ollama_llm = ChatOllama(
     base_url="http://10.1.1.47:11434",  # Your Ollama server's URL
     model="ollama/qwen2:1.5b",  # Include 'ollama/' prefix
-    verbose=True,
+    verbose=True,  # Enable verbose output for debugging
 )
 
-# Set the model in environment variable as well, this helps sometimes
+# Set the model in environment variable as well (optional, but can help)
 os.environ["OLLAMA_MODEL_NAME"] = "ollama/qwen2:1.5b"
 
 # Create a simple agent
@@ -31,7 +29,7 @@ agent = Agent(
     goal="Test the connection to the Ollama server",
     backstory="An AI agent designed to verify connectivity.",
     llm=ollama_llm,
-    verbose=True,
+    verbose=True,  # Enable verbose output for the agent
 )
 
 # Create a simple task with expected_output
@@ -41,12 +39,12 @@ task = Task(
     expected_output="The phrase 'Hello, World!' as a simple greeting.",
 )
 
-# Instantiate your crew
+# Instantiate your crew with verbose=True (for boolean True/False)
 crew = Crew(
     agents=[agent],
     tasks=[task],
     process=Process.sequential,
-    verbose=2,
+    verbose=2,  # 0, 1, or 2 for different levels of verbosity
 )
 
 # Run the crew
