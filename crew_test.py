@@ -3,7 +3,7 @@ from langchain_ollama import ChatOllama
 
 # Define your Ollama LLM
 ollama_llm = ChatOllama(
-    base_url="http://10.1.1.47:11434",
+    api_base="http://10.1.1.47:11434",
     model="ollama/qwen2.5:1.5b",
     temperature=0.7
 )
