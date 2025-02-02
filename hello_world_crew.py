@@ -44,7 +44,7 @@ crew = Crew(
     agents=[agent],
     tasks=[task],
     process=Process.sequential,
-    verbose=2,  # 0, 1, or 2 for different levels of verbosity
+    verbose=True,  # 0, 1, or 2 for different levels of verbosity
 )
 
 # Run the crew
