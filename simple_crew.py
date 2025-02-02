@@ -17,10 +17,11 @@ researcher = Agent(
     llm=ollama_llm,
 )
 
-# Create a simple task
+# Create a simple task with expected_output
 task = Task(
     description="What is the capital of France?",
     agent=researcher,
+    expected_output="The capital of France is Paris."  # Added expected output
 )
 
 # Create a crew with the agent and task
