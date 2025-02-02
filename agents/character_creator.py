@@ -1,17 +1,17 @@
 from crewai import Agent
 from pydantic import BaseModel, Field
 from typing import Optional
-from langchain_community.llms import Ollama
+from langchain_ollama import Ollama
 
 class CharacterCreatorConfig(BaseModel):
     """Configuration for the CharacterCreator agent's LLM."""
     llm_endpoint: str = Field(
         default="http://10.1.1.47:11434",
-        description="Endpoint for the language model server."
+        description="Endpoint for the Ollama server."
     )
     llm_model: str = Field(
         default="qwen2.5:1.5b",
-        description="Model identifier for the character creator."
+        description="Model identifier for Ollama."
     )
     temperature: float = Field(
         default=0.7,
@@ -19,9 +19,9 @@ class CharacterCreatorConfig(BaseModel):
         ge=0.0,
         le=1.0
     )
-    max_tokens: int = Field(
-        default=2000,
-        description="Maximum number of tokens for the language model.",
+    context_window: int = Field(
+        default=8192,  # Adjust this value based on your model's capabilities
+        description="Context window size (number of tokens) for the model.",
         gt=0
     )
     top_p: float = Field(
@@ -49,7 +49,7 @@ class CharacterCreator(Agent):
             base_url=config.llm_endpoint,
             model=config.llm_model,
             temperature=config.temperature,
-            num_ctx=config.max_tokens,
+            context_window=config.context_window,  # This controls the context window size
             top_p=config.top_p,
         )
         
