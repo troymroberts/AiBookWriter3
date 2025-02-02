@@ -1,4 +1,5 @@
-import autogen
+from autogen import AssistantAgent, UserProxyAgent
+
 
 config_list = [
     {
