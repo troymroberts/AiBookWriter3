@@ -1,5 +1,5 @@
 from crewai import Agent, Crew, Task, Process
-from langchain_ollama import Ollama
+from langchain_community.llms import Ollama
 
 # Define your Ollama LLM (replace with your server's details)
 ollama_llm = Ollama(
