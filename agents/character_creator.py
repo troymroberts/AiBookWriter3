@@ -67,10 +67,12 @@ class CharacterCreator(Agent):
             allow_delegation=False,
             tools=[],  # Add specific character development tools as needed
             llm_config={
-                "config_type": "ollama",
-                "base_url": config.llm_endpoint,
+                "provider": "ollama",
+                "api_base": config.llm_endpoint,
                 "model": config.llm_model,
-                "temperature": config.temperature,
-                "top_p": config.top_p
+                "config": {
+                    "temperature": config.temperature,
+                    "top_p": config.top_p,
+                }
             }
         )
