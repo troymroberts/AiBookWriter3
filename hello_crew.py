@@ -1,5 +1,9 @@
+import logging
 from crewai import Agent, Task, Crew, Process
-from langchain_ollama import OllamaLLM  # Import from langchain-ollama
+from langchain_ollama import OllamaLLM
+
+# Configure logging to show DEBUG level messages (optional)
+logging.basicConfig(level=logging.DEBUG)
 
 # Define the Ollama LLM instance
 ollama_llm = OllamaLLM(model="qwen2.5:1.5b", base_url="http://10.1.1.47:11434")
@@ -9,11 +13,11 @@ agent = Agent(
     role='Test Agent',
     goal='Say hello and confirm connection to Ollama',
     backstory='An agent designed to test connectivity.',
-    verbose=True,
+    verbose=True,  # Enable verbose output for the agent
     llm=ollama_llm
 )
 
-# Create a simple task with expected_output
+# Create a simple task
 task = Task(
     description='Simply say "Hello World" from Ollama.',
     expected_output='The agent should output a greeting like "Hello World"',
@@ -25,7 +29,7 @@ crew = Crew(
     agents=[agent],
     tasks=[task],
     process=Process.sequential,
-    verbose=2
+    verbose=True  # Enable verbose output for the crew
 )
 
 # Run the crew
