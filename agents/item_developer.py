@@ -50,4 +50,12 @@ class ItemDeveloper(Agent):
     def create_llm(self, config: ItemDeveloperConfig):
         from crewai.llm import LLM
         return LLM(
-            base_url=config.llm_endpoint
+            base_url=config.llm_endpoint,
+            model=config.llm_model,
+            temperature=config.temperature,
+            max_tokens=config.max_tokens,
+            top_p=config.top_p,
+            system_template=config.system_template,
+            prompt_template=config.prompt_template,
+            response_template=config.response_template,
+        )
