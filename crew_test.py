@@ -21,7 +21,9 @@ researcher = Agent(
 # Create a simple task
 task = Task(
     description="What is the capital of France?",
-    agent=researcher
+    agent=researcher,
+    expected_output="A clear statement indicating that Paris is the capital of France.",  # Added expected output
+    output_parser=None  # Make output parser optional
 )
 
 # Create a crew with the agent and task
