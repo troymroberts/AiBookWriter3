@@ -1,9 +1,8 @@
 import os
 from pathlib import Path
-
 import yaml
 from crewai import Agent, Crew, Process, Task
-from crewai.project import CrewBase, agent, crew, task, before_kickoff, after_kickoff
+from langchain_community.llms import Ollama
 from dotenv import load_dotenv
 
 # Agent imports
@@ -40,7 +39,6 @@ from tools.writing_state import WritingState
 # Load environment variables
 load_dotenv()
 
-@CrewBase
 class BookWritingCrew:
     """Main crew class for the book writing project."""
 
@@ -50,8 +48,14 @@ class BookWritingCrew:
         Args:
             ywriter_project (str): Path to the yWriter project file
         """
-        super().__init__()
         self.ywriter_project = ywriter_project
+
+        # Set up the Ollama LLM
+        self.ollama = Ollama(
+            base_url="http://10.1.1.47:11434",
+            model="qwen2.5:1.5b",
+            temperature=0.7
+        )
 
         # Load the genre configuration
         genre_file = os.environ.get("BOOK_GENRE", "literary_fiction") + ".yaml"
@@ -86,14 +90,24 @@ class BookWritingCrew:
         else:
             self.state = WritingState(ywriter_project)
 
-    # Agent definitions
-    @agent
+        # Create the crew with the configured LLM
+        self.crew = Crew(
+            agents=[],  # Agents will be added as needed
+            process=Process.sequential,
+            verbose=True,
+            llm=self.ollama
+        )
+
+    def character_creator(self) -> Agent:
+        """Return a configured CharacterCreator agent."""
+        config = CharacterCreatorConfig()
+        return CharacterCreator(config=config)
+
     def story_planner(self) -> Agent:
         """Return a configured StoryPlanner agent."""
         config = StoryPlannerConfig()
         return StoryPlanner(config=config)
 
-    @agent
     def outline_creator(self) -> Agent:
         """Return a configured OutlineCreator agent."""
         config = OutlineCreatorConfig()
@@ -109,111 +123,57 @@ class BookWritingCrew:
             ],
         )
 
-    @agent
     def setting_builder(self) -> Agent:
         """Return a configured SettingBuilder agent."""
         config = SettingBuilderConfig()
         return SettingBuilder(config=config)
 
-    @agent
-    def character_creator(self) -> Agent:
-        """Return a configured CharacterCreator agent."""
-        config = CharacterCreatorConfig()
-        return CharacterCreator(config=config)
-
-    @agent
     def relationship_architect(self) -> Agent:
         """Return a configured RelationshipArchitect agent."""
         config = RelationshipArchitectConfig()
         return RelationshipArchitect(config=config)
 
-    @agent
     def plot_agent(self) -> Agent:
         """Return a configured PlotAgent."""
         config = PlotAgentConfig()
         return PlotAgent(config=config)
 
-    @agent
     def writer(self) -> Agent:
         """Return a configured Writer agent."""
         config = WriterConfig()
         return Writer(config=config)
 
-    @agent
     def editor(self) -> Agent:
         """Return a configured Editor agent."""
         config = EditorConfig()
         return Editor(config=config)
 
-    @agent
     def critic(self) -> Agent:
         """Return a configured Critic agent."""
         config = CriticConfig()
         return Critic(config=config)
 
-    @agent
     def reviser(self) -> Agent:
         """Return a configured Reviser agent."""
         config = ReviserConfig()
         return Reviser(config=config)
 
-    @agent
     def memory_keeper(self) -> Agent:
         """Return a configured MemoryKeeper agent."""
         config = MemoryKeeperConfig()
         return MemoryKeeper(config=config)
 
-    @agent
     def item_developer(self) -> Agent:
         """Return a configured ItemDeveloper agent."""
         config = ItemDeveloperConfig()
         return ItemDeveloper(config=config)
 
-    @agent
     def researcher(self) -> Agent:
         """Return a configured Researcher agent."""
         config = ResearcherConfig()
         return Researcher(config=config)
 
-    # Task definitions
-    @task
-    def plan_story_arc(self) -> Task:
-        """Define the story arc planning task."""
-        config = self.tasks_config.get("plan_story_arc", {})
-        return Task(
-            description=config.get("description", "Create a high-level story arc for the entire book"),
-            agent=self.story_planner(),
-        )
-
-    @task
-    def create_chapter_outlines(self) -> Task:
-        """Define the chapter outline creation task."""
-        config = self.tasks_config.get("create_chapter_outlines", {})
-        return Task(
-            description=config.get("description", "Create detailed outlines for each chapter"),
-            agent=self.outline_creator(),
-            context=[self.plan_story_arc()],
-        )
-
-    # Crew lifecycle hooks
-    @before_kickoff
-    def before_kickoff_function(self, inputs):
-        """Execute before the crew starts working."""
-        print("Before kickoff function with inputs:", inputs)
-        return inputs
-
-    @after_kickoff
-    def after_kickoff_function(self, result):
-        """Execute after the crew finishes working."""
-        print("After kickoff function with result:", result)
-        return result
-
-    @crew
-    def crew(self) -> Crew:
-        """Create and configure the BookWriting crew."""
-        return Crew(
-            agents=self.agents,
-            tasks=self.tasks,
-            process=Process.sequential,
-            verbose=True,
-        )
+    def kickoff(self):
+        """Initialize and start the crew's work."""
+        # Add your kickoff logic here
+        pass

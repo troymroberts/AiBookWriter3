@@ -3,15 +3,7 @@ from pydantic import BaseModel, Field
 from typing import Optional
 
 class CharacterCreatorConfig(BaseModel):
-    """Configuration for the CharacterCreator agent's LLM."""
-    llm_endpoint: str = Field(
-        default="http://10.1.1.47:11434",
-        description="Endpoint for the Ollama server."
-    )
-    llm_model: str = Field(
-        default="qwen2.5:1.5b",
-        description="Model identifier for Ollama."
-    )
+    """Configuration for the CharacterCreator agent."""
     temperature: float = Field(
         default=0.7,
         description="Temperature setting for the language model.",
@@ -36,7 +28,7 @@ class CharacterCreator(Agent):
         """Initialize the CharacterCreator agent.
         
         Args:
-            config: Configuration instance containing LLM settings.
+            config: Configuration instance containing agent settings.
         """
         super().__init__(
             role='Character Creator',
@@ -65,14 +57,5 @@ class CharacterCreator(Agent):
                 """,
             verbose=True,
             allow_delegation=False,
-            tools=[],  # Add specific character development tools as needed
-            llm_config={
-                "provider": "ollama",
-                "api_base": config.llm_endpoint,
-                "model": config.llm_model,
-                "config": {
-                    "temperature": config.temperature,
-                    "top_p": config.top_p,
-                }
-            }
+            tools=[]  # Add specific character development tools as needed
         )
