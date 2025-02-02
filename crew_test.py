@@ -1,10 +1,11 @@
-import os
 from crewai import Agent, Crew, Task, Process
+from langchain_community.llms import Ollama
 
-# Set required environment variables
-os.environ["OLLAMA_API_BASE"] = "http://10.1.1.47:11434"
-os.environ["OPENAI_API_KEY"] = "dummy-key"  # Required by LiteLLM even when using Ollama
-os.environ["OPENAI_API_BASE"] = "http://10.1.1.47:11434"
+# Initialize Ollama LLM
+ollama = Ollama(
+    base_url="http://10.1.1.47:11434",
+    model="qwen2.5:1.5b"
+)
 
 # Create a very basic agent
 researcher = Agent(
@@ -13,7 +14,7 @@ researcher = Agent(
     backstory="An AI agent designed to answer basic questions.",
     verbose=True,
     allow_delegation=False,
-    llm_model="ollama/qwen2.5:1.5b"  # Using direct model name
+    llm=ollama  # Pass the Ollama LLM instance directly
 )
 
 # Create a simple task
