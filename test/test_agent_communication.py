@@ -13,6 +13,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.story_planner()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Story Planner agent",
                 agent=agent
             )
             result = agent.execute_task(task)
@@ -27,6 +28,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.outline_creator()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Outline Creator agent",
                 agent=agent
             )
             result = agent.execute_task(task)
@@ -41,6 +43,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.setting_builder()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Setting Builder agent",
                 agent=agent
             )
             result = agent.execute_task(task)
@@ -55,6 +58,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.character_creator()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Character Creator agent",
                 agent=agent
             )
             result = agent.execute_task(task)
@@ -69,6 +73,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.relationship_architect()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Relationship Architect agent",
                 agent=agent
             )
             result = agent.execute_task(task)
@@ -83,6 +88,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.plot_agent()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Plot Agent",
                 agent=agent
             )
             result = agent.execute_task(task)
@@ -97,6 +103,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.writer()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Writer agent",
                 agent=agent
             )
             result = agent.execute_task(task)
@@ -111,6 +118,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.editor()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Editor agent",
                 agent=agent
             )
             result = agent.execute_task(task)
@@ -125,6 +133,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.critic()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Critic agent",
                 agent=agent
             )
             result = agent.execute_task(task)
@@ -139,6 +148,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.reviser()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Reviser agent",
                 agent=agent
             )
             result = agent.execute_task(task)
@@ -153,6 +163,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.memory_keeper()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Memory Keeper agent",
                 agent=agent
             )
             result = agent.execute_task(task)
@@ -167,6 +178,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.item_developer()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Item Developer agent",
                 agent=agent
             )
             result = agent.execute_task(task)
@@ -181,6 +193,7 @@ class AgentCommunicationTest(unittest.TestCase):
             agent = self.crew.researcher()
             task = Task(
                 description="Introduce yourself.",
+                expected_output="A concise introduction from the Researcher agent",
                 agent=agent
             )
             result = agent.execute_task(task)
