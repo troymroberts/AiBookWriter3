@@ -12,6 +12,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.story_planner(),
+            expected_output="A concise introduction from the Story Planner agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "StoryPlanner failed to communicate with the model.")
@@ -22,6 +23,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.outline_creator(),
+            expected_output="A concise introduction from the Outline Creator agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "OutlineCreator failed to communicate with the model.")
@@ -32,6 +34,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.setting_builder(),
+            expected_output="A concise introduction from the Setting Builder agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "SettingBuilder failed to communicate with the model.")
@@ -42,6 +45,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.character_creator(),
+            expected_output="A concise introduction from the Character Creator agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "CharacterCreator failed to communicate with the model.")
@@ -52,6 +56,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.relationship_architect(),
+            expected_output="A concise introduction from the Relationship Architect agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "RelationshipArchitect failed to communicate with the model.")
@@ -62,6 +67,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.plot_agent(),
+            expected_output="A concise introduction from the Plot agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "PlotAgent failed to communicate with the model.")
@@ -72,6 +78,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.writer(),
+            expected_output="A concise introduction from the Writer agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "Writer failed to communicate with the model.")
@@ -82,6 +89,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.editor(),
+            expected_output="A concise introduction from the Editor agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "Editor failed to communicate with the model.")
@@ -92,6 +100,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.critic(),
+            expected_output="A concise introduction from the Critic agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "Critic failed to communicate with the model.")
@@ -102,6 +111,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.reviser(),
+            expected_output="A concise introduction from the Reviser agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "Reviser failed to communicate with the model.")
@@ -112,6 +122,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.memory_keeper(),
+            expected_output="A concise introduction from the Memory Keeper agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "MemoryKeeper failed to communicate with the model.")
@@ -122,6 +133,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.item_developer(),
+            expected_output="A concise introduction from the Item Developer agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "ItemDeveloper failed to communicate with the model.")
@@ -132,6 +144,7 @@ class AgentCommunicationTest(unittest.TestCase):
         task = Task(
             description="Introduce yourself.",
             agent=self.crew.researcher(),
+            expected_output="A concise introduction from the Researcher agent"
         )
         result = task.execute()
         self.assertNotEqual(result, "", "Researcher failed to communicate with the model.")
