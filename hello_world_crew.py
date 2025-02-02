@@ -1,37 +1,28 @@
 from crewai import Agent, Task, Crew, Process
 from langchain_community.llms import Ollama
 
-# ------ WORKAROUND START ------
-from crewai.cli.constants import ENV_VARS
-
-# Override the key name dynamically
-for entry in ENV_VARS.get("ollama", []):
-    if "API_BASE" in entry:
-        entry["BASE_URL"] = entry.pop("API_BASE")
-# ------ WORKAROUND END ------
-
 # Define your Ollama LLM
 ollama_llm = Ollama(
-    base_url="http://10.1.1.47:11434",
-    model="qwen2:1.5b",
+    base_url="http://10.1.1.47:11434",  # Your Ollama server's URL
+    model="ollama/qwen2:1.5b", # Include 'ollama/' prefix for the model name
 )
 
 # Create a simple agent
 agent = Agent(
-    role="Writer",
-    goal="Write a simple hello world message",
-    backstory="An AI agent that specializes in writing short messages.",
+    role="Tester",
+    goal="Test the connection to the Ollama server",
+    backstory="An AI agent designed to verify connectivity.",
     llm=ollama_llm,
     verbose=True,
 )
 
-# Create a task for the agent
+# Create a simple task
 task = Task(
-    description="Write a single 'Hello, World!' message.",
+    description="Say 'Hello, World!'",
     agent=agent,
 )
 
-# Instantiate your crew with a sequential process
+# Instantiate your crew
 crew = Crew(
     agents=[agent],
     tasks=[task],
@@ -39,9 +30,9 @@ crew = Crew(
     verbose=2,
 )
 
-# Get your crew to work!
+# Run the crew
 result = crew.kickoff()
 
 print("######################")
-print("Crew Work Result:")
+print("Crew Result:")
 print(result)
