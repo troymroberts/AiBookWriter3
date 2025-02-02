@@ -1,7 +1,7 @@
 from crewai import Agent
 from pydantic import BaseModel, Field
 from typing import Optional
-from langchain_community.llms import Ollama  # Fixed import path
+from langchain_community.llms import Ollama
 
 class CharacterCreatorConfig(BaseModel):
     """Configuration for the CharacterCreator agent's LLM."""
@@ -18,11 +18,6 @@ class CharacterCreatorConfig(BaseModel):
         description="Temperature setting for the language model.",
         ge=0.0,
         le=1.0
-    )
-    context_window: int = Field(
-        default=8192,  # Adjust this value based on your model's capabilities
-        description="Context window size (number of tokens) for the model.",
-        gt=0
     )
     top_p: float = Field(
         default=0.95,
@@ -49,8 +44,8 @@ class CharacterCreator(Agent):
             base_url=config.llm_endpoint,
             model=config.llm_model,
             temperature=config.temperature,
-            context_length=config.context_window,  # Note: parameter name changed to context_length
             top_p=config.top_p,
+            # Note: Context window is handled by the model configuration in Ollama directly
         )
         
         super().__init__(
