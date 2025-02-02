@@ -6,11 +6,11 @@ from langchain_community.llms import Ollama
 class CharacterCreatorConfig(BaseModel):
     """Configuration for the CharacterCreator agent's LLM."""
     llm_endpoint: str = Field(
-        default="http://localhost:11434",
+        default="http://10.1.1.47:11434",
         description="Endpoint for the language model server."
     )
     llm_model: str = Field(
-        default="llama2",
+        default="qwen2.5:1.5b",
         description="Model identifier for the character creator."
     )
     temperature: float = Field(
