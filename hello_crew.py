@@ -6,14 +6,17 @@ from langchain_ollama import OllamaLLM
 logging.basicConfig(level=logging.DEBUG)
 
 # Define the Ollama LLM instance
-ollama_llm = OllamaLLM(model="qwen2.5:1.5b", base_url="http://10.1.1.47:11434")
+ollama_llm = OllamaLLM(
+    model="ollama/qwen2.5:1.5b",  # Specify "ollama/" prefix
+    base_url="http://10.1.1.47:11434"
+)
 
 # Create a simple agent
 agent = Agent(
     role='Test Agent',
     goal='Say hello and confirm connection to Ollama',
     backstory='An agent designed to test connectivity.',
-    verbose=True,  # Enable verbose output for the agent
+    verbose=True,
     llm=ollama_llm
 )
 
@@ -29,7 +32,7 @@ crew = Crew(
     agents=[agent],
     tasks=[task],
     process=Process.sequential,
-    verbose=True  # Enable verbose output for the crew
+    verbose=True
 )
 
 # Run the crew
