@@ -1,13 +1,29 @@
 from crewai import Agent, Task, Crew, Process
-from langchain_ollama import Ollama
+from langchain_community.chat_models import ChatOllama  # Correct import
 import os
 
+# --- WORKAROUND (Potentially Required) ---
+# The following workaround might still be needed if
+# your CrewAI installation is using an older version
+# of the `crewai.cli.constants` file.
+
+from crewai.cli.constants import ENV_VARS
+
+# Override the key name dynamically
+for entry in ENV_VARS.get("ollama", []):
+    if "API_BASE" in entry:
+        entry["BASE_URL"] = entry.pop("API_BASE")
+# --- END WORKAROUND ---
+
 # Define your Ollama LLM
-ollama_llm = Ollama(
+ollama_llm = ChatOllama(  # Use ChatOllama
     base_url="http://10.1.1.47:11434",  # Your Ollama server's URL
     model="ollama/qwen2:1.5b",  # Include 'ollama/' prefix
     verbose=True,
 )
+
+# Set the model in environment variable as well, this helps sometimes
+os.environ["OLLAMA_MODEL_NAME"] = "ollama/qwen2:1.5b"
 
 # Create a simple agent
 agent = Agent(
