@@ -42,10 +42,7 @@ load_dotenv()
 
 @CrewBase
 class BookWritingCrew:
-    """
-    Main crew class for the book writing project.
-    Defines the agents, tasks, and overall crew configuration.
-    """
+    """Main crew class for the book writing project."""
 
     def __init__(self, ywriter_project: str):
         """Initialize the BookWritingCrew.
@@ -67,12 +64,21 @@ class BookWritingCrew:
             print(f"Genre config file not found: {genre_config_path}")
             self.genre_config = {}
 
-        # Initialize progress monitoring
+        # Load tasks configuration
+        tasks_config_path = Path(__file__).parent / "config" / "tasks.yaml"
+        try:
+            with open(tasks_config_path, "r") as f:
+                self.tasks_config = yaml.safe_load(f)
+        except FileNotFoundError:
+            print(f"Tasks config file not found: {tasks_config_path}")
+            self.tasks_config = {}
+
+        # Initialize the WritingProgressMonitor
         num_chapters = self.genre_config.get("num_chapters", 10)
         self.monitor = WritingProgressMonitor(num_chapters)
         self.monitor.start_session()
 
-        # Initialize writing state
+        # Initialize WritingState
         checkpoint_file = f"{ywriter_project}_checkpoint.json"
         if os.path.exists(checkpoint_file):
             self.state = WritingState(ywriter_project)
@@ -173,54 +179,38 @@ class BookWritingCrew:
     @task
     def plan_story_arc(self) -> Task:
         """Define the story arc planning task."""
+        config = self.tasks_config.get("plan_story_arc", {})
         return Task(
-            description="Create a high-level story arc for the entire book",
-            agent=self.story_planner,
+            description=config.get("description", "Create a high-level story arc for the entire book"),
+            agent=self.story_planner(),
         )
 
     @task
     def create_chapter_outlines(self) -> Task:
         """Define the chapter outline creation task."""
+        config = self.tasks_config.get("create_chapter_outlines", {})
         return Task(
-            description="Create detailed outlines for each chapter",
-            agent=self.outline_creator,
-            context=[self.plan_story_arc],
+            description=config.get("description", "Create detailed outlines for each chapter"),
+            agent=self.outline_creator(),
+            context=[self.plan_story_arc()],
         )
 
     # Crew lifecycle hooks
     @before_kickoff
     def before_kickoff_function(self, inputs):
-        """Execute before the crew starts working.
-        
-        Args:
-            inputs: The inputs to be processed
-            
-        Returns:
-            The processed inputs
-        """
+        """Execute before the crew starts working."""
         print("Before kickoff function with inputs:", inputs)
         return inputs
 
     @after_kickoff
     def after_kickoff_function(self, result):
-        """Execute after the crew finishes working.
-        
-        Args:
-            result: The results to be processed
-            
-        Returns:
-            The processed results
-        """
+        """Execute after the crew finishes working."""
         print("After kickoff function with result:", result)
         return result
 
     @crew
     def crew(self) -> Crew:
-        """Create and configure the BookWriting crew.
-        
-        Returns:
-            A configured Crew instance
-        """
+        """Create and configure the BookWriting crew."""
         return Crew(
             agents=self.agents,
             tasks=self.tasks,
