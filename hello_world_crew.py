@@ -20,7 +20,8 @@ hello_agent = Agent(
 # 3. Create a Task for the Agent
 hello_task = Task(
     description='Greet the user with a simple "Hello World!" message.',
-    agent=hello_agent
+    agent=hello_agent,
+    expected_output="A simple greeting message"  # ADDED expected_output here
 )
 
 # 4. Create a Crew and Assign the Task
