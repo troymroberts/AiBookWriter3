@@ -1,56 +1,34 @@
-from crewai import Agent, Task, Crew, Process
-#from langchain_community.llms import Ollama # This is the old import
+from crewai import Agent, Task, Crew
 from langchain_community.chat_models import ChatOllama
-import os
 
-# --- WORKAROUND (Potentially Required) ---
-# Only needed if you set OLLAMA_BASE_URL in your environment
-# and are not passing it directly to the ChatOllama constructor.
-from crewai.cli.constants import ENV_VARS
-
-# Override the key name dynamically
-for entry in ENV_VARS.get("ollama", []):
-    if "API_BASE" in entry:
-        entry["BASE_URL"] = entry.pop("API_BASE")
-# --- END WORKAROUND ---
-
-# Define your Ollama LLM
-ollama_llm = ChatOllama(  # Use ChatOllama
-    base_url="http://10.1.1.47:11434",  # Your Ollama server's URL
-    model="ollama/qwen2:1.5b",  # Include 'ollama/' prefix
-    verbose=True,  # Enable verbose output for debugging
+# 1. Configure Ollama connection
+ollama_llm = ChatOllama(
+    base_url="http://10.1.1.47:11434",  # Direct URL to your Ollama server
+    model="qwen2.5:1.5b",  # Verify exact model name in your Ollama
+    temperature=0.7
 )
 
-# Set the model in environment variable as well, this helps sometimes
-os.environ["OLLAMA_MODEL_NAME"] = "ollama/qwen2:1.5b"
-
-# Create a simple agent
-agent = Agent(
-    role="Tester",
-    goal="Test the connection to the Ollama server",
-    backstory="An AI agent designed to verify connectivity.",
-    llm=ollama_llm,
-    verbose=True, # Changed to True
+# 2. Create a test agent
+hello_agent = Agent(
+    role='Test Assistant',
+    goal='Respond to simple prompts',
+    backstory='You are a connectivity test agent',
+    llm=ollama_llm,  # Assign the custom Ollama configuration
+    verbose=True
 )
 
-# Create a simple task with expected_output
-task = Task(
-    description="Say 'Hello, World!'",
-    agent=agent,
-    expected_output="The phrase 'Hello, World!' as a simple greeting.",
+# 3. Create a simple task
+hello_task = Task(
+    description='Say "Hello World"',
+    agent=hello_agent
 )
 
-# Instantiate your crew
-crew = Crew(
-    agents=[agent],
-    tasks=[task],
-    process=Process.sequential,
-    verbose=True,  # Verbose level for the crew (0, 1, or 2)
+# 4. Create and run the crew
+test_crew = Crew(
+    agents=[hello_agent],
+    tasks=[hello_task],
+    verbose=2
 )
 
-# Run the crew
-result = crew.kickoff()
-
-print("######################")
-print("Crew Result:")
-print(result)
+result = test_crew.kickoff()
+print("Test Result:", result)
