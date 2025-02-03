@@ -2,23 +2,24 @@ import os
 from crewai import Agent, Task, Crew
 from langchain_ollama import OllamaLLM
 
-# 1. Define your Ollama LLM with more explicit model_kwargs
+# 1. Define your Ollama LLM with explicit api_base and simplified model_kwargs
 ollama_llm = OllamaLLM(
     model='qwen2.5:1.5b',
-    base_url='http://localhost:11434', # Keep base_url for OllamaLLM itself
+    base_url='http://localhost:11434', # Keep base_url here
+    api_base='http://localhost:11434', # ADD explicit api_base here as well
     model_kwargs={
-        'base_url': 'http://localhost:11434', # Keep base_url in model_kwargs too
-        'api_base': 'http://localhost:11434', # ADD api_base in model_kwargs
+        'base_url': 'http://localhost:11434', # Keep base_url in model_kwargs
+        #'api_base': 'http://localhost:11434', # REMOVE api_base from model_kwargs for simplicity
         'model': 'qwen2.5:1.5b',
-        'provider': 'ollama'
+        #'provider': 'ollama' # REMOVE provider from model_kwargs for simplicity
     }
 )
 
-# 2. Create an Agent (with goal and backstory)
+# 2. Create an Agent
 hello_agent = Agent(
     role='Greeting Agent',
-    goal='Say hello to the user in a friendly way.',  # ADDED goal
-    backstory="A simple agent designed to greet users.", # ADDED backstory
+    goal='Say hello to the user in a friendly way.',
+    backstory="A simple agent designed to greet users.",
     llm=ollama_llm,  # Assign the Ollama LLM to the agent
 )
 
