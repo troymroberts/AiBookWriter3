@@ -1,11 +1,12 @@
 import os
 from crewai import Agent, Task, Crew
-from langchain_ollama import OllamaLLM  # Changed import here
+from langchain_ollama import OllamaLLM
 
-# 1. Define your Ollama LLM
-ollama_llm = OllamaLLM(  # Using OllamaLLM here
-    base_url='http://localhost:11434',
-    model='qwen2.5:1.5b'
+# 1. Define your Ollama LLM with model_kwargs
+ollama_llm = OllamaLLM(
+    model='qwen2.5:1.5b',
+    base_url='http://localhost:11434', # Keep base_url here as well for clarity
+    model_kwargs={'base_url': 'http://localhost:11434', 'model': 'qwen2.5:1.5b'} # Explicitly in model_kwargs too
 )
 
 # 2. Create an Agent
