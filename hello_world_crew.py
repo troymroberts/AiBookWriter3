@@ -14,9 +14,11 @@ ollama_llm = OllamaLLM(
     }
 )
 
-# 2. Create a *minimal* Agent
+# 2. Create an Agent (with goal and backstory)
 hello_agent = Agent(
     role='Greeting Agent',
+    goal='Say hello to the user in a friendly way.',  # ADDED goal
+    backstory="A simple agent designed to greet users.", # ADDED backstory
     llm=ollama_llm,  # Assign the Ollama LLM to the agent
 )
 
